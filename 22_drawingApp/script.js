@@ -1,9 +1,15 @@
 const canvas = document.getElementById('canvas');
+const increaseBtn = document.getElementById('increase');
+const decreaseBtn = document.getElementById('decrease');
+const sizeEl = document.getElementById('size');
+const colorEl = document.getElementById('color');
+const clearEl = document.getElementById('clear');
+
 const ctx = canvas.getContext('2d');
 
-const size = 20;
+let size = 10;
 let isPressed = false;
-const color = 'black';
+let color = 'black';
 let x;
 let y;
 
@@ -21,6 +27,10 @@ function drawLine(x1, y1, x2, y2) {
   ctx.strokeStyle = color;
   ctx.lineWidth = size * 2;
   ctx.stroke();
+}
+
+function updateSizeOnScreen() {
+  sizeEl.innerText = size;
 }
 
 canvas.addEventListener('mousedown', e => {
@@ -47,3 +57,23 @@ canvas.addEventListener('mousemove', e => {
     y = y2;
   }
 });
+
+increaseBtn.addEventListener('click', () => {
+  size += 5;
+  if (size > 50) {
+    size = 50;
+  }
+  updateSizeOnScreen();
+});
+
+decreaseBtn.addEventListener('click', () => {
+  size -= 5;
+  if (size < 5) {
+    size = 5;
+  }
+  updateSizeOnScreen();
+});
+
+colorEl.addEventListener('change', e => (color = e.target.value));
+
+clearEl.addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
